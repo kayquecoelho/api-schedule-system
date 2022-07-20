@@ -42,7 +42,20 @@ async function getAverage(req: Request, res: Response) {
   res.send(average);
 }
 
+async function getLawsuitCount(req: Request, res: Response) {
+  const minCharge = +req.query.minCharge;
+
+  if (isNaN(minCharge)) {
+    return res.sendStatus(400);
+  }
+
+  const lawsuitCount = await lawsuitService.getLawsuitCount(minCharge);
+
+  return lawsuitCount;
+}
+
 export default {
   getLawsuitsBalance,
   getAverage,
+  getLawsuitCount,
 };

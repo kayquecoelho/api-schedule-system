@@ -52,7 +52,19 @@ function getAverageFilter(clientId: number, state: string): Prisma.LawsuitWhereI
   return filter;
 }
 
+async function getCount(minCharge: number): Promise<number> {
+  const lawsuitCount = await prisma.lawsuit.count({
+    where: {
+      charge: {
+        gt: minCharge,
+      },
+    },
+  });
+  return lawsuitCount;
+}
+
 export default {
   getBalance,
   getAverage,
+  getCount,
 };

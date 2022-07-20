@@ -17,4 +17,9 @@ function formatTotal(total: number) {
   return `R$ ${(total / 100).toFixed(2).replace('.', ',')}`;
 }
 
-export default { getBalance, getAverage };
+async function getLawsuitCount(minCharge: number) {
+  const lawsuitCount = await lawsuitRepository.getCount(minCharge);
+  return { lawsuitCount };
+}
+
+export default { getBalance, getAverage, getLawsuitCount };
