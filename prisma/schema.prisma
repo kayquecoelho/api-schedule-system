@@ -9,3 +9,26 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Client {
+  id    Int    @unique @default(autoincrement())
+  name  String
+  cnpj  String @unique
+  state String
+  Lawsuit Lawsuit[]
+
+  @@map("clients")
+}
+
+model Lawsuit {
+  id         Int      @unique @default(autoincrement())
+  initialism String   @unique
+  isActive   Boolean
+  createdAt  DateTime
+  charge     Int
+  state      String
+  Client     Client   @relation(fields: [clientId], references: [id])
+  clientId   Int
+
+  @@map("lawsuits")
+}
