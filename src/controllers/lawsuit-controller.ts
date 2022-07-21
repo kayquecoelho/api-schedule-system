@@ -54,8 +54,19 @@ async function getLawsuitCount(req: Request, res: Response) {
   return lawsuitCount;
 }
 
+async function getLawsuits(req: Request, res: Response) {
+  const onlyState = (req.query.onlyState || true) as unknown as boolean;
+
+  if (typeof onlyState !== 'boolean') return res.sendStatus(400);
+
+  const lawsuits = await lawsuitService.getLawsuits(onlyState);
+
+  res.send(lawsuits);
+}
+
 export default {
   getLawsuitsBalance,
   getAverage,
   getLawsuitCount,
+  getLawsuits,
 };
