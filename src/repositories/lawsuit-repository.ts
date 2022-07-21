@@ -1,4 +1,5 @@
 import { Prisma } from '@prisma/client';
+import formatDate from '../utils/formatDate.js';
 import prisma from '../database.js';
 
 async function getBalance(clientId: number, isActive: boolean): Promise<number> {
@@ -63,19 +64,36 @@ async function getCount(minCharge: number): Promise<number> {
   return lawsuitCount;
 }
 
-async function getLawsuitsFilteredByInitialism(initialism: string) {
+async function getAll(initialism: string, startDate: string, endDate: string) {
+  const filter = lawsuitFilter(initialism, startDate, endDate);
   return prisma.lawsuit.findMany({
     where: {
-      initialism: {
-        contains: initialism,
-      },
+      ...filter,
     },
   });
+}
+
+function lawsuitFilter(initialism: string, startDate: string, endDate: string): Prisma.LawsuitWhereInput {
+  const filter = [];
+
+  if (initialism) {
+    filter.push({ initialism: { contains: initialism } });
+  }
+
+  if (startDate) {
+    filter.push({ createdAt: { gte: formatDate(startDate) } });
+  }
+
+  if (endDate) {
+    filter.push({ createdAt: { lte: formatDate(endDate) } });
+  }
+
+  return { AND: filter };
 }
 
 export default {
   getBalance,
   getAverage,
   getCount,
-  getLawsuitsFilteredByInitialism,
+  getAll,
 };

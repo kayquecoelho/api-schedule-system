@@ -23,21 +23,8 @@ async function getLawsuitCount(minCharge: number) {
   return { lawsuitCount };
 }
 
-async function getLawsuits(onlyState: boolean, initialism: string) {
-  if (initialism) {
-    return lawsuitRepository.getLawsuitsFilteredByInitialism(initialism);
-  }
-
-  const clients = await clientsRepository.getGroupedByClient();
-
-  if (onlyState) {
-    return clients.map((client) => {
-      const validLawsuits = client.Lawsuit.filter((lawsuit) => lawsuit.state === client.state);
-      return { ...client, Lawsuit: validLawsuits };
-    });
-  } 
-
-  return clients;
+async function getLawsuits(initialism: string, startDate: string, endDate: string) {
+  return lawsuitRepository.getAll(initialism, startDate, endDate);
 }
 
 export default { getBalance, getAverage, getLawsuitCount, getLawsuits };
