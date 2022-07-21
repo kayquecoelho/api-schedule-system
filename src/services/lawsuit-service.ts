@@ -23,7 +23,11 @@ async function getLawsuitCount(minCharge: number) {
   return { lawsuitCount };
 }
 
-async function getLawsuits(onlyState: boolean) {
+async function getLawsuits(onlyState: boolean, initialism: string) {
+  if (initialism) {
+    return lawsuitRepository.getLawsuitsFilteredByInitialism(initialism);
+  }
+
   const clients = await clientsRepository.getGroupedByClient();
 
   if (onlyState) {

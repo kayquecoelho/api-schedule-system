@@ -56,10 +56,12 @@ async function getLawsuitCount(req: Request, res: Response) {
 
 async function getLawsuits(req: Request, res: Response) {
   const onlyState = (req.query.onlyState || true) as unknown as boolean;
-
+  const initialism = req.query.initialism as unknown as string;
+  
   if (typeof onlyState !== 'boolean') return res.sendStatus(400);
+  if (initialism && typeof initialism !== 'string') return res.sendStatus(400);
 
-  const lawsuits = await lawsuitService.getLawsuits(onlyState);
+  const lawsuits = await lawsuitService.getLawsuits(onlyState, initialism);
 
   res.send(lawsuits);
 }

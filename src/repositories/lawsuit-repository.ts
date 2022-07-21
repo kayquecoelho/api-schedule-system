@@ -63,8 +63,19 @@ async function getCount(minCharge: number): Promise<number> {
   return lawsuitCount;
 }
 
+async function getLawsuitsFilteredByInitialism(initialism: string) {
+  return prisma.lawsuit.findMany({
+    where: {
+      initialism: {
+        contains: initialism,
+      },
+    },
+  });
+}
+
 export default {
   getBalance,
   getAverage,
   getCount,
+  getLawsuitsFilteredByInitialism,
 };
