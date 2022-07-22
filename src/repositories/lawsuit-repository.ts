@@ -1,8 +1,9 @@
 import { Prisma } from '@prisma/client';
 import formatDate from '../utils/formatDate.js';
 import prisma from '../database.js';
+import { IsActiveFilter } from 'src/services/lawsuit-service.js';
 
-async function getBalance(clientId: number, isActive: boolean): Promise<number> {
+async function getBalance(clientId: number, isActive: IsActiveFilter): Promise<number> {
   const filter = getBalanceFilter(clientId, isActive);
 
   const balance = await prisma.lawsuit.aggregate({
@@ -15,15 +16,17 @@ async function getBalance(clientId: number, isActive: boolean): Promise<number> 
   return balance._sum.charge;
 }
 
-function getBalanceFilter(clientId: number, isActive: boolean): Prisma.LawsuitWhereInput {
+function getBalanceFilter(clientId: number, isActive: IsActiveFilter): Prisma.LawsuitWhereInput {
   const filter = {};
 
   if (!isNaN(clientId)) {
     filter['clientId'] = clientId;
   }
-  if (isActive !== undefined) {
+  
+  if (isActive !== 'all') {
     filter['isActive'] = isActive;
   }
+
   return filter;
 }
 

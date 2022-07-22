@@ -2,16 +2,12 @@ import { Request, Response } from 'express';
 import lawsuitService from '../services/lawsuit-service.js';
 
 type BalanceFilters = {
-  clientId: number | undefined;
-  isActive: boolean | undefined;
+  clientId: string;
+  isActive: string;
 };
 
 async function getLawsuitsBalance(req: Request, res: Response) {
-  const { clientId, isActive } = req.query as unknown as BalanceFilters;
-
-  if (isActive !== undefined && typeof isActive !== 'boolean') {
-    return res.sendStatus(400);
-  }
+  let { clientId, isActive } = req.query as unknown as BalanceFilters;
 
   if (clientId !== undefined && isNaN(+clientId)) {
     return res.sendStatus(400);

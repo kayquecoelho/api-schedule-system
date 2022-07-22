@@ -1,8 +1,17 @@
-import clientsRepository from '../repositories/clients-repository.js';
 import lawsuitRepository from '../repositories/lawsuit-repository.js';
 
-async function getBalance(clientId: number, isActive: boolean) {
-  const balance = await lawsuitRepository.getBalance(clientId, isActive);
+export type IsActiveFilter = 'all' | boolean;
+
+async function getBalance(clientId: number, isActive: string) {
+  let isActiveFilter : IsActiveFilter = 'all';
+
+  if (isActive === 'false') {
+    isActiveFilter = false;
+  } else if (isActive === 'true') {
+    isActiveFilter = true;
+  }
+
+  const balance = await lawsuitRepository.getBalance(clientId, isActiveFilter);
   const total = formatTotal(balance);
 
   return { total };
