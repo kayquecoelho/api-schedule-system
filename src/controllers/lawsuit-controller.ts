@@ -46,8 +46,7 @@ async function getLawsuitCount(req: Request, res: Response) {
   }
 
   const lawsuitCount = await lawsuitService.getLawsuitCount(minCharge);
-
-  return lawsuitCount;
+  res.send(lawsuitCount);
 }
 
 type LawsuitFilters = {
