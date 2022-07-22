@@ -17,8 +17,8 @@ async function getBalance(clientId: number, isActive: string) {
   return { total };
 }
 
-async function getAverage(companyId: number, state: string) {
-  const average = await lawsuitRepository.getAverage(companyId, state);
+async function getAverage(clientId: number, state: string) {
+  const average = await lawsuitRepository.getAverage(clientId, state);
   const total = formatTotal(average);
   return { total };
 }

@@ -18,14 +18,14 @@ async function getLawsuitsBalance(req: Request, res: Response) {
 }
 
 type AverageFilters = {
-  companyId: number;
+  clientId: number;
   state: string;
 };
 
 async function getAverage(req: Request, res: Response) {
-  const { companyId, state } = req.query as unknown as AverageFilters;
+  const { clientId, state } = req.query as unknown as AverageFilters;
 
-  if (companyId !== undefined && isNaN(+companyId)) {
+  if (clientId !== undefined && isNaN(+clientId)) {
     return res.sendStatus(400);
   }
 
@@ -33,7 +33,7 @@ async function getAverage(req: Request, res: Response) {
     return res.sendStatus(400);
   }
 
-  const average = await lawsuitService.getAverage(+companyId, state);
+  const average = await lawsuitService.getAverage(+clientId, state);
 
   res.send(average);
 }
