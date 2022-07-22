@@ -70,6 +70,9 @@ async function getCount(minCharge: number): Promise<number> {
 async function getAll(initialism: string, startDate: string, endDate: string) {
   const filter = lawsuitFilter(initialism, startDate, endDate);
   return prisma.lawsuit.findMany({
+    orderBy: {
+      initialism: 'asc'
+    },
     where: {
       ...filter,
     },
