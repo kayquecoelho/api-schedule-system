@@ -18,7 +18,7 @@ describe('TESTS', () => {
       const empresaA = await prisma.client.findFirst({ where: { name: 'Empresa A' } });
       const state = 'Rio de Janeiro';
 
-      const response = await server.get(`/lawsuits/average?companyId=${empresaA.id}&state=${state}`);
+      const response = await server.get(`/lawsuits/average?clientId=${empresaA.id}&state=${state}`);
 
       expect(response.body.total).toEqual('R$ 110000,00');
     });
