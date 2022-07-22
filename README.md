@@ -242,40 +242,17 @@ npm i
 - abra o terminal e execute os seguintes comandos
 
 ```bash
-npx prisma init
 npx prisma migrate dev
+```
+
+- Caso o comando seed não tenha sido executado automaticamente, execute o comando: 
+
+```bash
 npx prisma db seed
 ```
 
 5. Execute os testes
 
 ```bash
-npm run tests
-```
-
-# Como executar os testes
-
-1. Clone este repositório
-2. Instale as dependências
-
-```bash
-npm i
-```
-
-3. Crie o arquivo .env.test na raiz do projeto e configure conforme o arquivo .env.example
-
-4. Crie a database com o prisma
-
-- abra o terminal e execute os seguintes comandos
-
-```bash
-npx prisma init
-npx prisma migrate dev
-npx prisma db seed
-```
-
-5. Execute os testes
-
-```bash
-npm run tests
+npm run test
 ```
